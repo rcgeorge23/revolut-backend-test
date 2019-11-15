@@ -16,6 +16,8 @@ import static java.lang.String.format;
 
 public class CreateTransactionRoute implements Route {
 
+    private static final String VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND = "%s account could not be found";
+
     private final TransactionDao transactionDao;
     private final AccountDao accountDao;
     private final Gson gson;
@@ -32,24 +34,26 @@ public class CreateTransactionRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        Transaction transaction = gson.fromJson(request.body(), Transaction.class);
+        Transaction transaction;
+
+        try {
+            transaction = gson.fromJson(request.body(), Transaction.class);
+        } catch (Exception e) {
+            throw new ValidationException(400, "payload could not be parsed");
+        }
 
         if (accountNotFound(transaction.getSourceAccount())) {
-            throw new ValidationException(400, renderAccountNotFoundResponse("source"));
+            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "source"));
         }
 
         if (accountNotFound(transaction.getDestinationAccount())) {
-            throw new ValidationException(400, renderAccountNotFoundResponse("destination"));
+            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "destination"));
         }
 
         transactionDao.addTransaction(transaction);
 
         response.status(201);
         return transaction;
-    }
-
-    private String renderAccountNotFoundResponse(String accountType) {
-        return format("%s account could not be found", accountType);
     }
 
     private boolean accountNotFound(Account account) {

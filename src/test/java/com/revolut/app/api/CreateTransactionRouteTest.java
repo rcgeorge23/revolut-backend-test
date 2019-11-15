@@ -96,4 +96,15 @@ public class CreateTransactionRouteTest {
         assertEquals("destination account could not be found", validationException.getMessage());
         verifyNoMoreInteractions(transactionDaoMock);
     }
+
+    @Test
+    public void cannotAddNewTransactionIfPayloadCannotBeParsedToATransaction() {
+        when(requestMock.body()).thenReturn("unparseable payload");
+
+        ValidationException validationException = Assertions.assertThrows(ValidationException.class, () -> testObj.handle(requestMock, responseMock));
+
+        assertEquals(400, validationException.getHttpStatusCode());
+        assertEquals("payload could not be parsed", validationException.getMessage());
+        verifyNoMoreInteractions(transactionDaoMock);
+    }
 }

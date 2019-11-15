@@ -7,7 +7,6 @@ import com.revolut.app.api.CreateTransactionRoute;
 import com.revolut.app.api.GetTransactionsRoute;
 import com.revolut.app.dao.AccountDao;
 import com.revolut.app.dao.TransactionDao;
-import com.revolut.app.service.TransactionService;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
@@ -22,7 +21,6 @@ public class ApplicationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(TransactionService.class).in(Scopes.SINGLETON);
         bind(TransactionDao.class).in(Scopes.SINGLETON);
         bind(AccountDao.class).in(Scopes.SINGLETON);
         bind(GetTransactionsRoute.class).in(Scopes.SINGLETON);
