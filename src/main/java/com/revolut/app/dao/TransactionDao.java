@@ -11,10 +11,6 @@ public class TransactionDao {
 
     private List<Transaction> transactions = new ArrayList<>();
 
-//    public TransactionDao() {
-//        transactions.add(new Transaction(1L, Timestamp.from(ZonedDateTime.now(ZoneId.of("UTC")).toInstant()), new Account(1L), new Account(1L), new BigDecimal("100.00")));
-//    }
-
     public List<Transaction> findTransactions(Long accountId) {
         return transactions.stream().filter(transaction ->
                 accountId.equals(transaction.getSourceAccount().getId()) ||

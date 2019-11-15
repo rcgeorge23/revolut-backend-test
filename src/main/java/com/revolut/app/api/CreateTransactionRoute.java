@@ -16,7 +16,7 @@ import static java.lang.String.format;
 
 public class CreateTransactionRoute implements Route {
 
-    private static final String VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND = "%s account could not be found";
+    private static final String VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND = "%s could not be found";
 
     private final TransactionDao transactionDao;
     private final AccountDao accountDao;
@@ -43,16 +43,17 @@ public class CreateTransactionRoute implements Route {
         }
 
         if (accountNotFound(transaction.getSourceAccount())) {
-            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "source"));
+            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "sourceAccount"));
         }
 
         if (accountNotFound(transaction.getDestinationAccount())) {
-            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "destination"));
+            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "destinationAccount"));
         }
 
         transactionDao.addTransaction(transaction);
 
         response.status(201);
+
         return transaction;
     }
 

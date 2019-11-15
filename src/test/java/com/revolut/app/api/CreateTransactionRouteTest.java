@@ -80,7 +80,7 @@ public class CreateTransactionRouteTest {
         ValidationException validationException = Assertions.assertThrows(ValidationException.class, () -> testObj.handle(requestMock, responseMock));
 
         assertEquals(400, validationException.getHttpStatusCode());
-        assertEquals("source account could not be found", validationException.getMessage());
+        assertEquals("sourceAccount could not be found", validationException.getMessage());
         verifyNoMoreInteractions(transactionDaoMock);
     }
 
@@ -93,7 +93,7 @@ public class CreateTransactionRouteTest {
         ValidationException validationException = Assertions.assertThrows(ValidationException.class, () -> testObj.handle(requestMock, responseMock));
 
         assertEquals(400, validationException.getHttpStatusCode());
-        assertEquals("destination account could not be found", validationException.getMessage());
+        assertEquals("destinationAccount could not be found", validationException.getMessage());
         verifyNoMoreInteractions(transactionDaoMock);
     }
 
