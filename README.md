@@ -1,3 +1,10 @@
+### Revolut backend test
+
+* Implemented with Java 8, Spark & Guice
+* Unit tested with JUnit 5 & Mockito
+* Functionally tested with Spock
+* Built with Maven
+
 #### Create a transaction
 ```
 curl -X POST localhost:8080/transaction -d '{"transactionTimestamp":1573838917528,"sourceAccount":{"id":1},"destinationAccount":{"id":2},"amount":100.00}'
