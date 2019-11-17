@@ -23,7 +23,7 @@ public class ExceptionHandler implements spark.ExceptionHandler {
     public void handle(Exception exception, Request request, Response response) {
         if (exception instanceof ValidationException) {
             log.warn("A validation error occurred: {}", exception.getMessage());
-            log.debug("Validation cause", exception);
+            log.debug("Validation error cause", exception);
 
             ValidationException validationException = (ValidationException) exception;
             response.status(validationException.getHttpStatusCode());
