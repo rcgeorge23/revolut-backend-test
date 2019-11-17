@@ -20,17 +20,6 @@
         <groovy.version>2.5.8</groovy.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>maven-central</id>
-            <url>http://central.maven.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>codehaus</id>
-            <url>https://mvnrepository.com</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
