@@ -37,17 +37,45 @@ class TransactionIT extends Specification {
 
     def "create transaction returns response with http status 201 and body of persisted transaction with id assigned"() {
         when:
-        def response = restClient.post(
+        def postResponse = restClient.post(
                 path: "/transaction",
                 body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(ACCOUNT_1), Account.of(ACCOUNT_2), new BigDecimal("100.00")),
                 requestContentType: JSON)
 
         then:
-        response.status == 201
-        response.data.id == 1
-        response.data.sourceAccount.id == 1
-        response.data.destinationAccount.id == 2
-        response.data.amount == 100
+        postResponse.status == 201
+        postResponse.data.id == 1
+        postResponse.data.sourceAccount.id == 1
+        postResponse.data.destinationAccount.id == 2
+        postResponse.data.amount == 100
+
+        and: "we can now get the transaction we've created for account 1"
+        def getResponse1 = restClient.get(
+                path: "/transactions/1",
+                requestContentType: JSON
+        )
+
+        then:
+        getResponse1.status == 200
+        getResponse1.data.size == 1
+        getResponse1.data[0].id == 1
+        getResponse1.data[0].sourceAccount.id == 1
+        getResponse1.data[0].destinationAccount.id == 2
+        getResponse1.data[0].amount == 100
+
+        and: "we can now get the transaction we've created for account 2"
+        def getResponse2 = restClient.get(
+                path: "/transactions/2",
+                requestContentType: JSON
+        )
+
+        then:
+        getResponse2.status == 200
+        getResponse2.data.size == 1
+        getResponse2.data[0].id == 1
+        getResponse2.data[0].sourceAccount.id == 1
+        getResponse2.data[0].destinationAccount.id == 2
+        getResponse2.data[0].amount == 100
     }
 
     def "create transaction returns 404 when source account does not exist"() {
