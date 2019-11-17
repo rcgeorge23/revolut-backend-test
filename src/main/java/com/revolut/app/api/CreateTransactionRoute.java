@@ -39,7 +39,7 @@ public class CreateTransactionRoute implements Route {
         try {
             transaction = gson.fromJson(request.body(), Transaction.class);
         } catch (Exception e) {
-            throw new ValidationException(400, "payload could not be parsed");
+            throw new ValidationException(400, "payload could not be parsed", e);
         }
 
         if (accountNotFound(transaction.getSourceAccount())) {

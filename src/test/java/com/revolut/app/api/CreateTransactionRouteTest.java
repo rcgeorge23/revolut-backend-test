@@ -1,5 +1,6 @@
 package com.revolut.app.api;
 
+import com.google.gson.JsonSyntaxException;
 import com.revolut.app.dao.AccountDao;
 import com.revolut.app.dao.TransactionDao;
 import com.revolut.app.model.Account;
@@ -105,6 +106,7 @@ public class CreateTransactionRouteTest {
 
         assertEquals(400, validationException.getHttpStatusCode());
         assertEquals("payload could not be parsed", validationException.getMessage());
+        Assertions.assertTrue(validationException.getCause() instanceof JsonSyntaxException);
         verifyNoMoreInteractions(transactionDaoMock);
     }
 }

@@ -5,7 +5,11 @@ public class ValidationException extends RuntimeException {
     private int httpStatusCode;
 
     public ValidationException(int httpStatusCode, String validationMessage) {
-        super(validationMessage);
+        this(httpStatusCode, validationMessage, null);
+    }
+
+    public ValidationException(int httpStatusCode, String validationMessage, Throwable cause) {
+        super(validationMessage, cause);
         this.httpStatusCode = httpStatusCode;
     }
 
