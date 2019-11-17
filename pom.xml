@@ -16,6 +16,8 @@
         <slf4j.version>1.7.29</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <guice.version>4.2.2</guice.version>
+        <groovy-http-builder.version>0.7.1</groovy-http-builder.version>
+        <groovy.version>2.5.8</groovy.version>
     </properties>
 
     <repositories>
@@ -73,32 +75,15 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>add-integration-test-sources</id>
                         <phase>generate-test-sources</phase>
                         <goals>
                             <goal>add-test-source</goal>
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/it/java</source>
                                 <source>src/it/groovy</source>
-                                <source>src/test/groovy</source>
                                 <source>src/test/java</source>
                             </sources>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>add-integration-test-resources</id>
-                        <phase>generate-test-resources</phase>
-                        <goals>
-                            <goal>add-test-resource</goal>
-                        </goals>
-                        <configuration>
-                            <resources>
-                                <resource>
-                                    <directory>src/it/resources</directory>
-                                </resource>
-                            </resources>
                         </configuration>
                     </execution>
                 </executions>
@@ -114,12 +99,6 @@
                         </goals>
                         <configuration>
                             <testSources>
-                                <testSource>
-                                    <directory>${project.basedir}/src/test/groovy</directory>
-                                    <includes>
-                                        <include>**/*.groovy</include>
-                                    </includes>
-                                </testSource>
                                 <testSource>
                                     <directory>${project.basedir}/src/it/groovy</directory>
                                     <includes>
@@ -137,7 +116,6 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>Start your java process</id>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -149,7 +127,7 @@
                     <executable>java</executable>
                     <arguments>
                         <argument>-classpath</argument>
-                        <classpath/><!-- classpath from the module dependencies-->
+                        <classpath/>
                         <argument>com.revolut.app.Application</argument>
                     </arguments>
                 </configuration>
@@ -197,7 +175,7 @@
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
-            <version>2.5.2</version>
+            <version>${groovy.version}</version>
             <type>pom</type>
         </dependency>
         <dependency>
@@ -225,15 +203,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.codehaus.groovy.modules.http-builder</groupId>
             <artifactId>http-builder</artifactId>
-            <version>0.7.1</version>
+            <version>${groovy-http-builder.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
