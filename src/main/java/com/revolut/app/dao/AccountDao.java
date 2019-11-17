@@ -1,11 +1,10 @@
 package com.revolut.app.dao;
 
 import com.revolut.app.model.Account;
-import com.revolut.app.model.Transaction;
 
-import java.util.*;
-
-import static java.util.stream.Collectors.toList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class AccountDao {
 

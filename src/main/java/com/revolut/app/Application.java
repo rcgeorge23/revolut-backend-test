@@ -5,8 +5,7 @@ import com.revolut.app.api.CreateTransactionRoute;
 import com.revolut.app.api.GetTransactionsRoute;
 import com.revolut.app.module.ApplicationModule;
 import com.revolut.app.module.GsonResponseTransformer;
-import com.revolut.app.validation.ValidationException;
-import com.revolut.app.validation.ValidationExceptionHandler;
+import com.revolut.app.validation.ExceptionHandler;
 
 import javax.inject.Inject;
 
@@ -19,18 +18,18 @@ public class Application {
     private final GetTransactionsRoute getTransactionsRoute;
     private final CreateTransactionRoute createTransactionRoute;
     private final GsonResponseTransformer gsonResponseTransformer;
-    private final ValidationExceptionHandler validationExceptionHandler;
+    private final ExceptionHandler exceptionHandler;
 
     @Inject
     Application(
             final GetTransactionsRoute getTransactionsRoute,
             final CreateTransactionRoute createTransactionRoute,
             final GsonResponseTransformer gsonResponseTransformer,
-            final ValidationExceptionHandler validationExceptionHandler) {
+            final ExceptionHandler exceptionHandler) {
         this.getTransactionsRoute = getTransactionsRoute;
         this.createTransactionRoute = createTransactionRoute;
         this.gsonResponseTransformer = gsonResponseTransformer;
-        this.validationExceptionHandler = validationExceptionHandler;
+        this.exceptionHandler = exceptionHandler;
     }
 
     void start(final int port) {
@@ -38,7 +37,7 @@ public class Application {
 
         before((request, response) -> response.type("application/json"));
 
-        exception(ValidationException.class, validationExceptionHandler);
+        exception(Exception.class, exceptionHandler);
 
         get(format("/transactions/%s", PARAMETER_ACCOUNT_ID), getTransactionsRoute, gsonResponseTransformer);
 

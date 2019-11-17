@@ -6,16 +6,16 @@ import groovyx.net.http.RESTClient
 import spock.lang.Specification
 
 import java.sql.Timestamp
-import java.time.Instant
 
 import static groovyx.net.http.ContentType.JSON
+import static java.time.Instant.now
 
 class TransactionIT extends Specification {
 
-    public static final Timestamp TRANSACTION_TIMESTAMP = new Timestamp(Instant.now().toEpochMilli())
-    public static final long NON_EXISTANT_ACCOUNT = 100L
-    public static final long ACCOUNT_1 = 1L
-    public static final long ACCOUNT_2 = 2L
+    static final Timestamp TRANSACTION_TIMESTAMP = new Timestamp(now().toEpochMilli())
+    static final long NON_EXISTANT_ACCOUNT = 100L
+    static final long ACCOUNT_1 = 1L
+    static final long ACCOUNT_2 = 2L
 
     RESTClient restClient
 
@@ -36,13 +36,14 @@ class TransactionIT extends Specification {
     }
 
     def "create transaction returns response with http status 201 and body of persisted transaction with id assigned"() {
-        when:
+        when: "we create a new transaction"
         def postResponse = restClient.post(
                 path: "/transaction",
                 body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(ACCOUNT_1), Account.of(ACCOUNT_2), new BigDecimal("100.00")),
-                requestContentType: JSON)
+                requestContentType: JSON
+        )
 
-        then:
+        then: "response payload contains the newly created transaction with an id assigned"
         postResponse.status == 201
         postResponse.data.id == 1
         postResponse.data.sourceAccount.id == 1
@@ -85,7 +86,8 @@ class TransactionIT extends Specification {
             restClient.post(
                     path: "/transaction",
                     body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(NON_EXISTANT_ACCOUNT), Account.of(ACCOUNT_2), new BigDecimal("100.00")),
-                    requestContentType: JSON)
+                    requestContentType: JSON
+            )
         } catch (ex) {
             assert ex.response.status == 404
             assert ex.response.data.message == "sourceAccount could not be found"
@@ -99,7 +101,8 @@ class TransactionIT extends Specification {
             restClient.post(
                     path: "/transaction",
                     body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(ACCOUNT_1), Account.of(NON_EXISTANT_ACCOUNT), new BigDecimal("100.00")),
-                    requestContentType: JSON)
+                    requestContentType: JSON
+            )
         } catch (ex) {
             assert ex.response.status == 404
             assert ex.response.data.message == "destinationAccount could not be found"

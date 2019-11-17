@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import spark.Request;
@@ -17,9 +16,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ExtendWith(MockitoExtension.class)
-public class ValidationExceptionHandlerTest {
+public class ExceptionHandlerTest {
 
-    private ValidationExceptionHandler testObj;
+    private ExceptionHandler testObj;
 
     @Mock
     private Request requestMock;
@@ -29,7 +28,7 @@ public class ValidationExceptionHandlerTest {
 
     @BeforeEach
     public void beforeEach() {
-        testObj = new ValidationExceptionHandler(GSON);
+        testObj = new ExceptionHandler(GSON);
     }
 
     @Test

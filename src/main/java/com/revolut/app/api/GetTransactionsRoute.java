@@ -46,7 +46,7 @@ public class GetTransactionsRoute implements Route {
 
     private boolean isLong(String accountIdString) {
         try {
-            Long.parseLong(accountIdString);
+            parseLong(accountIdString);
             return true;
         } catch (NumberFormatException ignored) {
             return false;

@@ -3,20 +3,19 @@ package com.revolut.app.validation;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;
 
 import javax.inject.Inject;
 
-public class ValidationExceptionHandler implements ExceptionHandler {
+public class ExceptionHandler implements spark.ExceptionHandler {
 
-    private Logger log = LoggerFactory.getLogger(ValidationExceptionHandler.class);
+    private Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
 
     private final Gson gson;
 
     @Inject
-    public ValidationExceptionHandler(Gson gson) {
+    public ExceptionHandler(Gson gson) {
         this.gson = gson;
     }
 
@@ -31,7 +30,7 @@ public class ValidationExceptionHandler implements ExceptionHandler {
             return;
         }
 
-        log.error("An expected error occurred", exception);
+        log.error("An unexpected error occurred", exception);
         throw new RuntimeException(exception);
     }
 
