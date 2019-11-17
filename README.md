@@ -1,4 +1,4 @@
-### Revolut backend test
+# Revolut backend test
 
 * Implemented with Java 8, Spark & Guice
 * Unit tested with JUnit 5 & Mockito
