@@ -37,7 +37,7 @@ public class GetTransactionsRoute implements Route {
 
         long accountId = parseLong(accountIdString);
 
-        if (accountDao.findById(accountId).isEmpty()) {
+        if (!accountDao.findById(accountId).isPresent()) {
             throw new ValidationException(404, format("account id %d cannot be found", accountId));
         }
 

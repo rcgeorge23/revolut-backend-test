@@ -18,6 +18,10 @@ public class Account {
         this.id = id;
     }
 
+    public static Account of(Long id) {
+        return new Account(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

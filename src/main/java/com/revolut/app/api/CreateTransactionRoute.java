@@ -43,11 +43,11 @@ public class CreateTransactionRoute implements Route {
         }
 
         if (accountNotFound(transaction.getSourceAccount())) {
-            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "sourceAccount"));
+            throw new ValidationException(404, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "sourceAccount"));
         }
 
         if (accountNotFound(transaction.getDestinationAccount())) {
-            throw new ValidationException(400, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "destinationAccount"));
+            throw new ValidationException(404, format(VALIDATION_MESSAGE_ACCOUNT_NOT_FOUND, "destinationAccount"));
         }
 
         transactionDao.addTransaction(transaction);
@@ -58,6 +58,6 @@ public class CreateTransactionRoute implements Route {
     }
 
     private boolean accountNotFound(Account account) {
-        return accountDao.findById(account.getId()).isEmpty();
+        return !accountDao.findById(account.getId()).isPresent();
     }
 }
