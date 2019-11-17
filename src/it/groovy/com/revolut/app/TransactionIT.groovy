@@ -13,7 +13,7 @@ import static java.time.Instant.now
 class TransactionIT extends Specification {
 
     static final Timestamp TRANSACTION_TIMESTAMP = new Timestamp(now().toEpochMilli())
-    static final long NON_EXISTANT_ACCOUNT = 100L
+    static final long NON_EXISTENT_ACCOUNT = 100L
     static final long ACCOUNT_1 = 1L
     static final long ACCOUNT_2 = 2L
 
@@ -85,7 +85,7 @@ class TransactionIT extends Specification {
         try {
             restClient.post(
                     path: "/transaction",
-                    body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(NON_EXISTANT_ACCOUNT), Account.of(ACCOUNT_2), new BigDecimal("100.00")),
+                    body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(NON_EXISTENT_ACCOUNT), Account.of(ACCOUNT_2), new BigDecimal("100.00")),
                     requestContentType: JSON
             )
         } catch (ex) {
@@ -100,7 +100,7 @@ class TransactionIT extends Specification {
         try {
             restClient.post(
                     path: "/transaction",
-                    body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(ACCOUNT_1), Account.of(NON_EXISTANT_ACCOUNT), new BigDecimal("100.00")),
+                    body: new Transaction(null, TRANSACTION_TIMESTAMP, Account.of(ACCOUNT_1), Account.of(NON_EXISTENT_ACCOUNT), new BigDecimal("100.00")),
                     requestContentType: JSON
             )
         } catch (ex) {
