@@ -79,7 +79,7 @@ class TransactionIT extends Specification {
         getResponse2.data[0].amount == 100
     }
 
-    def "create transaction returns 404 when source account does not exist"() {
+    def "create transaction returns 400 when source account does not exist"() {
         expect:
 
         try {
@@ -89,12 +89,12 @@ class TransactionIT extends Specification {
                     requestContentType: JSON
             )
         } catch (ex) {
-            assert ex.response.status == 404
+            assert ex.response.status == 400
             assert ex.response.data.message == "sourceAccount could not be found"
         }
     }
 
-    def "create transaction returns 404 when destination account does not exist"() {
+    def "create transaction returns 400 when destination account does not exist"() {
         expect:
 
         try {
@@ -104,7 +104,7 @@ class TransactionIT extends Specification {
                     requestContentType: JSON
             )
         } catch (ex) {
-            assert ex.response.status == 404
+            assert ex.response.status == 400
             assert ex.response.data.message == "destinationAccount could not be found"
         }
     }
